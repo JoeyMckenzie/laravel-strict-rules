@@ -1,0 +1,29 @@
+{
+    "name": "joeymckenzie/laravel-strict-rules",
+    "description": "An opinionated set of PHPStan tailored for Laravel.",
+    "type": "library",
+    "require-dev": {
+        "phpstan/phpstan": "^2.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LaravelStrictRules\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Joey McKenzie",
+            "email": "joey.mckenzie27@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.3"
+    }
+}

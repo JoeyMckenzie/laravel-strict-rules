@@ -1,0 +1,51 @@
+name: Run tests
+
+on:
+  push:
+    branches:
+      - main
+      - template/kitchen-sink
+  pull_request:
+    branches:
+      - main
+      - template/kitchen-sink
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ ubuntu-latest ]
+        php: [ 8.3, 8.4 ]
+        stability: [ prefer-lowest, prefer-stable ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: xdebug
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Run tests with coverage
+        run: composer test:coverage
+
+      - name: Upload coverage reports to Codecov
+        if: ${{ !cancelled() && matrix.php == '8.4' && matrix.stability == 'prefer-stable' && github.ref == 'refs/heads/template/kitchen-sink' }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

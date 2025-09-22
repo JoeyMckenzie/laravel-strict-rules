@@ -3,7 +3,14 @@
     "description": "An opinionated set of PHPStan tailored for Laravel.",
     "type": "library",
     "require-dev": {
-        "phpstan/phpstan": "^2.1"
+        "ergebnis/composer-normalize": "^2.48",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^12.2",
+        "rector/rector": "^2.1"
     },
     "license": "MIT",
     "autoload": {
@@ -25,5 +32,11 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        }
     }
 }

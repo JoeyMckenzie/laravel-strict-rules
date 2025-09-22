@@ -1,0 +1,67 @@
+name: Run linters
+
+on:
+  push:
+    branches:
+      - main
+      - template/kitchen-sink
+  pull_request:
+    branches:
+      - main
+      - template/kitchen-sink
+
+permissions:
+  contents: write
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ ubuntu-latest ]
+        php: [ 8.3, 8.4 ]
+        stability: [ prefer-lowest, prefer-stable ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Install Aspell
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            sudo apt-get update && sudo apt-get install -y aspell aspell-en
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            brew install aspell
+          fi
+
+      - name: Check Typos
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" || "$RUNNER_OS" == "macOS" ]]; then
+           composer typos
+          fi
+
+      - name: Generate types
+        run: composer generate:types
+
+      - name: Lint frontend code
+        run: npm run ci
+
+      - name: Lint backend code
+        run: composer ci
+
+      # - name: Commit Changes
+      #   uses: stefanzweifel/git-auto-commit-action@v5
+      #   with:
+      #     commit_message: fix code style
+      #     commit_options: '--no-verify'

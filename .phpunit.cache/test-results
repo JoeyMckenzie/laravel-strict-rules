@@ -1,0 +1,1 @@
+{"version":2,"defects":[],"times":{"Tests\\Rules\\Model\\DisallowFillMethodRuleTest::testDisallowsFillAndForceFillOnEloquentModels":1.654,"Tests\\Rules\\Model\\DisallowFillMethodRuleDisabledTest::testRuleSkipsWhenNotEnabled":0.01}}

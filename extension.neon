@@ -1,0 +1,14 @@
+parameters:
+    laravelStrictRules:
+        defaultRuleState: false
+        rules: []
+
+services:
+    laravelStrictRules.configuration:
+        class: LaravelStrictRules\Configuration
+        factory: LaravelStrictRules\Configuration(%laravelStrictRules.rules%, %laravelStrictRules.defaultRuleState%)
+
+    -
+        class: LaravelStrictRules\Rules\Model\DisallowFillMethodRule
+        tags:
+            - phpstan.rules.rule

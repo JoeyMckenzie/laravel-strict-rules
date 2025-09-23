@@ -4,13 +4,15 @@
     "type": "library",
     "require-dev": {
         "ergebnis/composer-normalize": "^2.48",
+        "larastan/larastan": "^3.7",
         "phpstan/phpstan": "^2.1",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^12.2",
-        "rector/rector": "^2.1"
+        "rector/rector": "^2.1",
+        "laravel/pint": "^1.25"
     },
     "license": "MIT",
     "autoload": {
